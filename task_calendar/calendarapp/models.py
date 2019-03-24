@@ -5,8 +5,6 @@ class DateBlock(models.Model):
     task1 = models.CharField(max_length = 17)
     task2 = models.CharField(max_length = 17)
     task3 = models.CharField(max_length = 17)
-    task4 = models.CharField(max_length = 17)
-    task5 = models.CharField(max_length = 17)
     date = models.DateField()
 
     def __str__(self):

@@ -1,0 +1,200 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Calendar Task App</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans" rel="stylesheet">
+
+
+    <link rel="stylesheet" type="text/css" href="{% static 'calendarapp/css/masters.css' %}">
+  </head>
+  <body>
+    <div class="container" id="top_div">
+      <br>
+      <h2 id="top_div_header">March (03/2019)</h2>
+      <br>
+      <div class="container">
+        <form>
+          <div class="row">
+          <div class="form-group col-sm-5">
+            <label for="month">Month</label>
+            <select class="form-control" id="month" name="month">
+              <option>January</option>
+              <option>February</option>
+              <option>March</option>
+              <option>April</option>
+              <option>May</option>
+              <option>June</option>
+              <option>July</option>
+              <option>August</option>
+              <option>September</option>
+              <option>October</option>
+              <option>November</option>
+              <option>December</option>
+            </select>
+          </div>
+          <div class="form-group col-sm-5">
+            <label for="year">Year</label>
+            <input type="number" class="form-control" min="1901" max="9999" id="year" name="year" placeholder="yyyy">
+          </div>
+          <div class="form-group col-sm-2" >
+            <br>
+            <button type="button" id="submitdate" class="btn btn-primary">Ok</button>
+          </div>
+        </div>
+        </form>
+      <div class="container">
+      <table id="calendar" class="table table-borderless ">
+        <thead class="thead-light">
+          <tr>
+            <th>Sun</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            <th>Sat</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border border-primary holiday-date"></td>
+            <td class="border border-success present-date">
+              <button type="button" onclick="showValue(01)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal" id="btn1">1</button>
+              <p class="date-status"><ins><b>Present</b></ins></p>
+              <p class="date-task"><b>Work Allocated</b></p>
+              <p class="date-task"><b>Meeting Scheduled</b></p>
+              <p class="date-task"><b>Scheduled Call</b></p>
+            </td>
+            <td class="border border-danger leave-date">
+              <button type="button" onclick="showValue(02)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">2</button>
+            </td>
+            <td class="border border-secondary">
+              <button type="button" onclick="showValue(03)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">3</button>
+            </td>
+            <td class="border border-secondary">
+              <button type="button" onclick="showValue(04)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">4</button>
+            </td>
+            <td class="border border-secondary">
+              <button type="button" onclick="showValue(05)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">5</button>
+            </td>
+            <td class="border border-secondary">
+              <button type="button" onclick="showValue(06)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">6</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="border border-primary">7</td>
+            <td class="border border-secondary">8</td>
+            <td class="border border-secondary">9</td>
+            <td class="border border-secondary">10</td>
+            <td class="border border-secondary">11</td>
+            <td class="border border-secondary">12</td>
+            <td class="border border-secondary">13</td>
+          </tr>
+          <tr>
+            <td class="border border-primary">14</td>
+            <td class="border border-secondary">15</td>
+            <td class="border border-secondary">16</td>
+            <td class="border border-secondary">17</td>
+            <td class="border border-secondary">18</td>
+            <td class="border border-secondary">19</td>
+            <td class="border border-secondary">20</td>
+          </tr>
+          <tr>
+            <td class="border border-primary">21</td>
+            <td class="border border-secondary">
+              <button type="button" onclick="showValue(22)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">22</button>
+            </td>
+            <td class="border border-secondary">23</td>
+            <td class="border border-secondary">24</td>
+            <td class="border border-secondary">25</td>
+            <td class="border border-secondary">26</td>
+            <td class="border border-secondary">27</td>
+          </tr>
+          <tr>
+            <td class="border border-primary">28</td>
+            <td class="border border-secondary">29</td>
+            <td class="border border-secondary">30</td>
+            <td class="border border-secondary">31</td>
+            <td class="border border-secondary"></td>
+            <td class="border border-secondary"></td>
+            <td class="border border-secondary"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <br>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="stModal" tabindex="-1" role="dialog" aria-labelledby="stModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="stModalLabel">Update</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="date">Date</label>
+                <input type="text" class="form-control" id="date" name="date" value="1" disabled>
+              </div>
+              <div class="form-group">
+                <label for="status">Status</label>
+                <select class="form-control" id="status" name="status">
+                  <option>None</option>
+                  <option>Present</option>
+                  <option>Leave</option>
+                  <option>Holiday</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="task1">Task1</label>
+                <select class="form-control" id="task1" name="task1">
+                  <option>None</option>
+                  <option>Work Allocated</option>
+                  <option>Scheduled Call</option>
+                  <option>Meeting Scheduled</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="task2">Task2</label>
+                <select class="form-control" id="task2">
+                  <option>None</option>
+                  <option>Work Allocated</option>
+                  <option>Scheduled Call</option>
+                  <option>Meeting Scheduled</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="task3">Task3</label>
+                <select class="form-control" id="task3">
+                  <option>None</option>
+                  <option>Work Allocated</option>
+                  <option>Scheduled Call</option>
+                  <option>Meeting Scheduled</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!--Bootstrap JS Scripts -->
+    <script type="text/javascript" src="{% static 'calendarapp/js/clickdateset.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
