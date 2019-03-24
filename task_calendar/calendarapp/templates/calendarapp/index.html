@@ -16,7 +16,11 @@
   <body>
     <div class="container" id="top_div">
       <br>
-      <h2 id="top_div_header">March (03/2019)</h2>
+      {% if currdate.month < 10 %}
+        <h2 id="top_div_header">{{ currdate|date:'F' }} (0{{currdate.month}}/{{currdate.year}})</h2>
+      {% else %}
+        <h2 id="top_div_header">{{ currdate|date:'F' }} ({{currdate.month}}/{{currdate.year}})</h2>
+      {% endif %}
       <br>
       <div class="container">
         <form>
@@ -63,67 +67,62 @@
         </thead>
         <tbody>
           <tr>
-            <td class="border border-primary holiday-date"></td>
-            <td class="border border-success present-date">
-              <button type="button" onclick="showValue(01)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal" id="btn1">1</button>
-              <p class="date-status"><ins><b>Present</b></ins></p>
-              <p class="date-task"><b>Work Allocated</b></p>
-              <p class="date-task"><b>Meeting Scheduled</b></p>
-              <p class="date-task"><b>Scheduled Call</b></p>
-            </td>
-            <td class="border border-danger leave-date">
-              <button type="button" onclick="showValue(02)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">2</button>
-            </td>
+            {% if first_day == 'Sunday' %}
             <td class="border border-secondary">
-              <button type="button" onclick="showValue(03)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">3</button>
+              <button type="button" onclick="showValue(01)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">1</button>
             </td>
+            {% endif %}
+            {% if first_day == 'Monday' %}
+            <td class="border border-secondary"></td>
             <td class="border border-secondary">
-              <button type="button" onclick="showValue(04)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">4</button>
+              <button type="button" onclick="showValue(01)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">1</button>
             </td>
+            {% endif %}
+            {% if first_day == 'Tuesday' %}
+            <td class="border border-secondary"></td>
+            <td class="border border-secondary"></td>
             <td class="border border-secondary">
-              <button type="button" onclick="showValue(05)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">5</button>
+              <button type="button" onclick="showValue(01)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">1</button>
             </td>
-            <td class="border border-secondary">
-              <button type="button" onclick="showValue(06)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">6</button>
-            </td>
-          </tr>
-          <tr>
-            <td class="border border-primary">7</td>
-            <td class="border border-secondary">8</td>
-            <td class="border border-secondary">9</td>
-            <td class="border border-secondary">10</td>
-            <td class="border border-secondary">11</td>
-            <td class="border border-secondary">12</td>
-            <td class="border border-secondary">13</td>
-          </tr>
-          <tr>
-            <td class="border border-primary">14</td>
-            <td class="border border-secondary">15</td>
-            <td class="border border-secondary">16</td>
-            <td class="border border-secondary">17</td>
-            <td class="border border-secondary">18</td>
-            <td class="border border-secondary">19</td>
-            <td class="border border-secondary">20</td>
-          </tr>
-          <tr>
-            <td class="border border-primary">21</td>
-            <td class="border border-secondary">
-              <button type="button" onclick="showValue(22)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">22</button>
-            </td>
-            <td class="border border-secondary">23</td>
-            <td class="border border-secondary">24</td>
-            <td class="border border-secondary">25</td>
-            <td class="border border-secondary">26</td>
-            <td class="border border-secondary">27</td>
-          </tr>
-          <tr>
-            <td class="border border-primary">28</td>
-            <td class="border border-secondary">29</td>
-            <td class="border border-secondary">30</td>
-            <td class="border border-secondary">31</td>
+            {% endif %}
+            {% if first_day == 'Wednesday' %}
             <td class="border border-secondary"></td>
             <td class="border border-secondary"></td>
             <td class="border border-secondary"></td>
+            <td class="border border-secondary">
+              <button type="button" onclick="showValue(01)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">1</button>
+            </td>
+            {% endif %}
+            {% if first_day == 'Thursday' %}
+            <td class="border border-secondary"></td>
+            <td class="border border-secondary"></td>
+            <td class="border border-secondary"></td>
+            <td class="border border-secondary"></td>
+            <td class="border border-secondary">
+              <button type="button" onclick="showValue(01)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">1</button>
+            </td>
+            {% endif %}
+            {% if first_day == 'Friday' %}
+            <td class="border border-secondary"></td>
+            <td class="border border-secondary"></td>
+            <td class="border border-secondary"></td>
+            <td class="border border-secondary"></td>
+            <td class="border border-secondary"></td>
+            <td class="border border-secondary">
+              <button type="button" onclick="showValue(01)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">1</button>
+            </td>
+            {% endif %}
+            {% if first_day == 'Saturday' %}
+            <td class="border border-secondary"></td>
+            <td class="border border-secondary"></td>
+            <td class="border border-secondary"></td>
+            <td class="border border-secondary"></td>
+            <td class="border border-secondary"></td>
+            <td class="border border-secondary"></td>
+            <td class="border border-secondary">
+              <button type="button" onclick="showValue(01)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">1</button>
+            </td>
+            {% endif %}
           </tr>
         </tbody>
       </table>

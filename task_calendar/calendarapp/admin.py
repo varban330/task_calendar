@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import DateBlock
+from .models import DateInstance
 
-admin.site.register(DateBlock)
+admin.site.register(DateInstance)
