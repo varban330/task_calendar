@@ -57,8 +57,8 @@ class UpdateView(APIView):
         return HttpResponse(json.dumps(dict), status=200)
 
     def post(self,request):
-        date_req = request.POST["date"]
-        date_time = datetime.strptime("%d/%m/%Y")
+        date_req = request.data['date']
+        date_time = datetime.strptime(date_req,"%d/%m/%Y")
         date = date_time.date()
         blocks  = DateInstance.objects.filter(date = date)
         if blocks:
@@ -68,3 +68,13 @@ class UpdateView(APIView):
         else:
             response = {"status":"None", "task1":"None", "task2":"None", "task3":"None"}
             return HttpResponse(json.dumps(response), status=200)
+
+
+class TestView(APIView):
+    def get(self, request):
+            dict = {'message': 'Hi,This is your developer, Varun this side'}
+            return HttpResponse(json.dumps(dict),status=200)
+
+    def post(self,request):
+            dict = {'message': 'Hi,This is your developer, Varun this side'}
+            return HttpResponse(json.dumps(dict), status=200)
