@@ -6,4 +6,5 @@ from django.conf.urls import url
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^', views.IndexView.as_view(), name="index"),
+    url(r'^update/', views.UpdateView.as_view(), name="update"),
 ]

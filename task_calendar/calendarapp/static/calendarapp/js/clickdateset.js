@@ -8,4 +8,5 @@ var showValue = function(val){
         var text = val+"/"+res;
     }
     document.getElementById("date").value = text;
+    
 }
