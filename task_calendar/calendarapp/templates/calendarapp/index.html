@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -23,9 +24,16 @@
       {% endif %}
       <br>
       <div class="container">
-        <form>
+        <form id="dateform" action="" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
           <div class="row">
-          <div class="form-group col-sm-5">
+            {% for field in form %}
+            <div class="form-group col-sm-5">
+              <label>{{ field.label_tag }}</label>
+              {{ field|add_class:'form-control' }}
+            </div>
+            {% endfor %}
+          <!-- <div class="form-group col-sm-5">
             <label for="month">Month</label>
             <select class="form-control" id="month" name="month">
               <option>January</option>
@@ -45,10 +53,10 @@
           <div class="form-group col-sm-5">
             <label for="year">Year</label>
             <input type="number" class="form-control" min="1901" max="9999" id="year" name="year" placeholder="yyyy">
-          </div>
+          </div> -->
           <div class="form-group col-sm-2" >
             <br>
-            <button type="button" id="submitdate" class="btn btn-primary">Ok</button>
+            <button type="submit" id="submitdate" class="btn btn-primary">Ok</button>
           </div>
         </div>
         </form>
@@ -257,6 +265,7 @@
     </div>
   <!--Bootstrap JS Scripts -->
     <script type="text/javascript" src="{% static 'calendarapp/js/clickdateset.js' %}"></script>
+    <script type="text/javascript" src="{% static 'calendarapp/js/requestindex.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
