@@ -36,6 +36,7 @@ td{
 .date-task{
   text-align: left;
   margin-bottom: 2%;
+  color: black;
 }
 
 .date-status{
@@ -72,13 +73,24 @@ td{
 
 .work-task{
   background-color: #F4D484;
+}
 
+.work-task:hover{
+  background-color: #F080D0
 }
 
 .call-task{
+  background-color: #84F4D4;
+}
 
+.call-task:hover{
+  background-color: #80F0D0
 }
 
 .meet-task{
+  background-color: #D484F4;
+}
 
+.meet-task:hover{
+  background-color: #D080F0
 }
