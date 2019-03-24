@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.views.generic import View
 from .models import DateInstance
 from datetime import datetime
-from .functions import last_day_of_month, generate_date_array
+from .functions import last_day_of_month, generate_date_array, generate_sat_date_array,isttime
 
 # Create your views here.
 class IndexView(View):
@@ -11,6 +11,7 @@ class IndexView(View):
 
     def get(self,request):
         currdate = datetime.now()
+        currdate = isttime(currdate)
         month = currdate.month
         year = currdate.year
         blocks = DateInstance.objects.filter(date__month = month, date__year = year)
@@ -18,4 +19,9 @@ class IndexView(View):
         first_date = currdate.replace(day=1)
         date_array = generate_date_array(first_date,last_date)
         first_day = first_date.strftime("%A")
-        return render(request, self.template_name,{'blocks':blocks, 'currdate':currdate, "date_array":date_array, "first_day":first_day})
+        date_array = date_array[1:]
+        sat_date_array = generate_sat_date_array(date_array)
+        block_date_array = list()
+        for block in blocks:
+            block_date_array.append(block.date)
+        return render(request, self.template_name,{'blocks':blocks, 'currdate':currdate, "date_array":date_array, "sat_date_array":sat_date_array, "block_date_array":block_date_array ,"first_day":first_day, "first_date":first_date.date()})

@@ -122,7 +122,72 @@
             <td class="border border-secondary">
               <button type="button" onclick="showValue(01)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">1</button>
             </td>
+            </tr>
+            <tr>
             {% endif %}
+            {% for date in date_array %}
+            {% for block in blocks %}
+              {% if block.date == date %}
+                {% if block.status == 'Present' %}
+                <td class="border border-success present-date">
+                {% endif %}
+                {% if block.status == 'Holiday' %}
+                <td class="border border-primary holiday-date">
+                {% endif %}
+                {% if block.status == 'Leave' %}
+                <td class="border border-danger leave-date">
+                {% endif %}
+                {% if block.status == 'None' %}
+                <td class="border border-secondary">
+                {% endif %}
+                  <button type="button" onclick="showValue({{ date|date:'d' }})" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal" id="btn1">{{ date.day }}</button>
+                  <p class="date-status"><ins><b>{{ block.status }}</b></ins></p>
+                  {% if block.task1 != "None" %}
+                    {% if block.task1 == "Work Allocated" %}
+                      <p class="date-task work-task"><b>{{ block.task1 }}</b></p>
+                    {% endif %}
+                    {% if block.task1 == "Scheduled Call" %}
+                      <p class="date-task call-task"><b>{{ block.task1 }}</b></p>
+                    {% endif %}
+                    {% if block.task1 == "Meeting Scheduled" %}
+                      <p class="date-task meet-task"><b>{{ block.task1 }}</b></p>
+                    {% endif %}
+                  {% endif %}
+                  {% if block.task2 != "None" %}
+                  {% if block.task2 == "Work Allocated" %}
+                    <p class="date-task work-task"><b>{{ block.task2 }}</b></p>
+                  {% endif %}
+                  {% if block.task2 == "Scheduled Call" %}
+                    <p class="date-task call-task"><b>{{ block.task2 }}</b></p>
+                  {% endif %}
+                  {% if block.task2 == "Meeting Scheduled" %}
+                    <p class="date-task meet-task"><b>{{ block.task2 }}</b></p>
+                  {% endif %}
+                  {% endif %}
+                  {% if block.task3 != "None" %}
+                  {% if block.task3 == "Work Allocated" %}
+                    <p class="date-task work-task"><b>{{ block.task3 }}</b></p>
+                  {% endif %}
+                  {% if block.task3 == "Scheduled Call" %}
+                    <p class="date-task call-task"><b>{{ block.task3 }}</b></p>
+                  {% endif %}
+                  {% if block.task3 == "Meeting Scheduled" %}
+                    <p class="date-task meet-task"><b>{{ block.task3 }}</b></p>
+                  {% endif %}
+                  {% endif %}
+              </td>
+              {% endif %}
+            {% endfor %}
+            {% if date not in block_date_array %}
+            <td class="border border-secondary">
+              <button type="button" onclick="showValue({{ date|date:'d' }})" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">{{ date.day }}</button>
+            </td>
+            {% endif %}
+              {% if date in sat_date_array %}
+                </tr>
+                <tr>
+            {% endif %}
+            {% endfor %}
           </tr>
         </tbody>
       </table>
