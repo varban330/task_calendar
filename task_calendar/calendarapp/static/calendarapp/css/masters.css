@@ -76,7 +76,7 @@ td{
 }
 
 .work-task:hover{
-  background-color: #F080D0;
+  background-color: #AAAAAA;
 }
 
 .call-task{
@@ -84,7 +84,7 @@ td{
 }
 
 .call-task:hover{
-  background-color: #80F0D0;
+  background-color: #AAAAAA;
 }
 
 .meet-task{
@@ -92,5 +92,5 @@ td{
 }
 
 .meet-task:hover{
-  background-color: #D080F0;
+  background-color: #AAAAAA;
 }

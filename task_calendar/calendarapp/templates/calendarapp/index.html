@@ -33,27 +33,6 @@
               {{ field|add_class:'form-control' }}
             </div>
             {% endfor %}
-          <!-- <div class="form-group col-sm-5">
-            <label for="month">Month</label>
-            <select class="form-control" id="month" name="month">
-              <option>January</option>
-              <option>February</option>
-              <option>March</option>
-              <option>April</option>
-              <option>May</option>
-              <option>June</option>
-              <option>July</option>
-              <option>August</option>
-              <option>September</option>
-              <option>October</option>
-              <option>November</option>
-              <option>December</option>
-            </select>
-          </div>
-          <div class="form-group col-sm-5">
-            <label for="year">Year</label>
-            <input type="number" class="form-control" min="1901" max="9999" id="year" name="year" placeholder="yyyy">
-          </div> -->
           <div class="form-group col-sm-2" >
             <br>
             <button type="submit" id="submitdate" class="btn btn-primary">Ok</button>
@@ -75,40 +54,23 @@
         </thead>
         <tbody>
           <tr>
-            {% if first_day == 'Sunday' %}
-            <td class="border border-secondary">
-              <button type="button" onclick="showValue(01)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">1</button>
-            </td>
-            {% endif %}
             {% if first_day == 'Monday' %}
             <td class="border border-secondary"></td>
-            <td class="border border-secondary">
-              <button type="button" onclick="showValue(01)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">1</button>
-            </td>
             {% endif %}
             {% if first_day == 'Tuesday' %}
             <td class="border border-secondary"></td>
             <td class="border border-secondary"></td>
-            <td class="border border-secondary">
-              <button type="button" onclick="showValue(01)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">1</button>
-            </td>
             {% endif %}
             {% if first_day == 'Wednesday' %}
             <td class="border border-secondary"></td>
             <td class="border border-secondary"></td>
             <td class="border border-secondary"></td>
-            <td class="border border-secondary">
-              <button type="button" onclick="showValue(01)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">1</button>
-            </td>
             {% endif %}
             {% if first_day == 'Thursday' %}
             <td class="border border-secondary"></td>
             <td class="border border-secondary"></td>
             <td class="border border-secondary"></td>
             <td class="border border-secondary"></td>
-            <td class="border border-secondary">
-              <button type="button" onclick="showValue(01)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">1</button>
-            </td>
             {% endif %}
             {% if first_day == 'Friday' %}
             <td class="border border-secondary"></td>
@@ -116,9 +78,6 @@
             <td class="border border-secondary"></td>
             <td class="border border-secondary"></td>
             <td class="border border-secondary"></td>
-            <td class="border border-secondary">
-              <button type="button" onclick="showValue(01)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">1</button>
-            </td>
             {% endif %}
             {% if first_day == 'Saturday' %}
             <td class="border border-secondary"></td>
@@ -127,11 +86,69 @@
             <td class="border border-secondary"></td>
             <td class="border border-secondary"></td>
             <td class="border border-secondary"></td>
+            {% endif %}
+            {% for block in blocks %}
+              {% if block.date == first_date %}
+                {% if block.status == 'Present' %}
+                <td class="border border-success present-date">
+                {% endif %}
+                {% if block.status == 'Holiday' %}
+                <td class="border border-primary holiday-date">
+                {% endif %}
+                {% if block.status == 'Leave' %}
+                <td class="border border-danger leave-date">
+                {% endif %}
+                {% if block.status == 'None' %}
+                <td class="border border-secondary">
+                {% endif %}
+                  <button type="button" onclick="showValue({{ first_date|date:'d' }})" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal" id="btn1">{{ first_date.day }}</button>
+                  {% if block.status != 'None' %}
+                  <p class="date-status"><ins><b>{{ block.status }}</b></ins></p>
+                  {% endif %}
+                  {% if block.task1 != "None" %}
+                    {% if block.task1 == "Work Allocated" %}
+                      <p class="date-task work-task"><b>{{ block.task1 }}</b></p>
+                    {% endif %}
+                    {% if block.task1 == "Scheduled Call" %}
+                      <p class="date-task call-task"><b>{{ block.task1 }}</b></p>
+                    {% endif %}
+                    {% if block.task1 == "Meeting Scheduled" %}
+                      <p class="date-task meet-task"><b>{{ block.task1 }}</b></p>
+                    {% endif %}
+                  {% endif %}
+                  {% if block.task2 != "None" %}
+                  {% if block.task2 == "Work Allocated" %}
+                    <p class="date-task work-task"><b>{{ block.task2 }}</b></p>
+                  {% endif %}
+                  {% if block.task2 == "Scheduled Call" %}
+                    <p class="date-task call-task"><b>{{ block.task2 }}</b></p>
+                  {% endif %}
+                  {% if block.task2 == "Meeting Scheduled" %}
+                    <p class="date-task meet-task"><b>{{ block.task2 }}</b></p>
+                  {% endif %}
+                  {% endif %}
+                  {% if block.task3 != "None" %}
+                  {% if block.task3 == "Work Allocated" %}
+                    <p class="date-task work-task"><b>{{ block.task3 }}</b></p>
+                  {% endif %}
+                  {% if block.task3 == "Scheduled Call" %}
+                    <p class="date-task call-task"><b>{{ block.task3 }}</b></p>
+                  {% endif %}
+                  {% if block.task3 == "Meeting Scheduled" %}
+                    <p class="date-task meet-task"><b>{{ block.task3 }}</b></p>
+                  {% endif %}
+                  {% endif %}
+              </td>
+              {% endif %}
+            {% endfor %}
+            {% if first_date not in block_date_array %}
             <td class="border border-secondary">
-              <button type="button" onclick="showValue(01)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">1</button>
+              <button type="button" onclick="showValue({{ first_date|date:'d' }})" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">{{ first_date.day }}</button>
             </td>
-            </tr>
-            <tr>
+            {% endif %}
+            {% if first_day == 'Saturday' %}
+          </tr>
+          <tr>
             {% endif %}
             {% for date in date_array %}
             {% for block in blocks %}
@@ -149,7 +166,9 @@
                 <td class="border border-secondary">
                 {% endif %}
                   <button type="button" onclick="showValue({{ date|date:'d' }})" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal" id="btn1">{{ date.day }}</button>
+                  {% if block.status != 'None' %}
                   <p class="date-status"><ins><b>{{ block.status }}</b></ins></p>
+                  {% endif %}
                   {% if block.task1 != "None" %}
                     {% if block.task1 == "Work Allocated" %}
                       <p class="date-task work-task"><b>{{ block.task1 }}</b></p>
@@ -254,11 +273,13 @@
                   <option>Meeting Scheduled</option>
                 </select>
               </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <a href="{% url 'index' %}">
+                  <button type="button" onclick="resetindex()" class="btn btn-primary">Save changes</button>
+                </a>
+              </div>
             </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
           </div>
         </div>
       </div>
@@ -269,15 +290,5 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script>
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-       console.log(this.responseText);
-      }
-    };
-    xhttp.open("GET", "http://127.0.0.1:8000/update/", true);
-    xhttp.send();
-    </script>
   </body>
 </html>

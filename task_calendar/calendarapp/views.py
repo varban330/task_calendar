@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import View
 from .models import DateInstance
 from datetime import datetime
@@ -7,6 +7,7 @@ from .functions import last_day_of_month, generate_date_array, generate_sat_date
 from .forms import DateForm
 from rest_framework.views import APIView
 import json
+from django.urls import reverse
 
 # Create your views here.
 class IndexView(View):
@@ -68,6 +69,36 @@ class UpdateView(APIView):
         else:
             response = {"status":"None", "task1":"None", "task2":"None", "task3":"None"}
             return HttpResponse(json.dumps(response), status=200)
+
+
+class RecordView(APIView):
+    def post(self,request):
+        date_req = request.data['date']
+        print(date_req)
+        date_time = datetime.strptime(date_req,"%d/%m/%Y")
+        date = date_time.date()
+        status = request.data['status']
+        task1 = request.data['task1']
+        task2 = request.data['task2']
+        task3 = request.data['task3']
+        blocks  = DateInstance.objects.filter(date = date)
+        if blocks:
+            block = blocks[0]
+            block.status = status
+            block.task1 = task1
+            block.task2 = task2
+            block.task3 = task3
+            block.save()
+        else:
+            block = DateInstance()
+            block.status = status
+            block.task1 = task1
+            block.task2 = task2
+            block.task3 = task3
+            block.date = date
+            block.save()
+        response = {'message':"Database Updated Successfully"}
+        return HttpResponse(json.dumps(response), status=200)
 
 
 class TestView(APIView):
