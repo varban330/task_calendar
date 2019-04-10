@@ -61,7 +61,7 @@ var showValue = function(val,obj){
       object.innerHTML = old_html;
     }
     else{
-      object.outerHTML = ""
+      object.innerHTML = ""
     }
   }).catch(function(ex) {
     console.log("parsing failed", ex);

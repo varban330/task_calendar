@@ -95,11 +95,11 @@ td{
   background-color: #AAAAAA;
 }
 
-.date-task{
-  background-color: #9F74E8;  
+.rand-task{
+  background-color: #9F74E8;
 }
 
-.date-task:hover{
+.rand-task:hover{
   background-color: #AAAAAA;
 }
 
