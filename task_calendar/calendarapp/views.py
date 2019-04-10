@@ -26,6 +26,7 @@ class IndexView(View):
         month = currdate.month
         year = currdate.year
         blocks = DateInstance.objects.filter(date__month = month, date__year = year)
+        tasks = Tasks.objects.filter(date__month = month, date__year = year)
         last_date = last_day_of_month(currdate.date())
         first_date = currdate.replace(day=1)
         date_array = generate_date_array(first_date,last_date)
@@ -35,7 +36,7 @@ class IndexView(View):
         block_date_array = list()
         for block in blocks:
             block_date_array.append(block.date)
-        return render(request, self.template_name,{'form':form, 'blocks':blocks, 'currdate':currdate, "date_array":date_array, "sat_date_array":sat_date_array, "block_date_array":block_date_array ,"first_day":first_day, "first_date":first_date.date()})
+        return render(request, self.template_name,{'form':form, 'blocks':blocks, 'currdate':currdate, "date_array":date_array, "sat_date_array":sat_date_array, "block_date_array":block_date_array ,"first_day":first_day, "first_date":first_date.date(), "tasks":tasks})
 
     def post(self,request):
         form = self.form_class(request.GET)
@@ -45,23 +46,14 @@ class IndexView(View):
         date_time = datetime.strptime(date_req,"%d/%m/%Y")
         date = date_time.date()
         status = request.POST['status']
-        task1 = request.POST['task1']
-        task2 = request.POST['task2']
-        task3 = request.POST['task3']
         blocks  = DateInstance.objects.filter(date = date)
         if blocks:
             block = blocks[0]
             block.status = status
-            block.task1 = task1
-            block.task2 = task2
-            block.task3 = task3
             block.save()
         else:
             block = DateInstance()
             block.status = status
-            block.task1 = task1
-            block.task2 = task2
-            block.task3 = task3
             block.date = date
             block.save()
         if not request.GET.keys():
@@ -74,6 +66,7 @@ class IndexView(View):
         month = currdate.month
         year = currdate.year
         blocks = DateInstance.objects.filter(date__month = month, date__year = year)
+        tasks = Tasks.objects.filter(date__month = month, date__year = year)
         last_date = last_day_of_month(currdate.date())
         first_date = currdate.replace(day=1)
         date_array = generate_date_array(first_date,last_date)
@@ -83,7 +76,7 @@ class IndexView(View):
         block_date_array = list()
         for block in blocks:
             block_date_array.append(block.date)
-        return render(request, self.template_name,{'form':form, 'blocks':blocks, 'currdate':currdate, "date_array":date_array, "sat_date_array":sat_date_array, "block_date_array":block_date_array ,"first_day":first_day, "first_date":first_date.date()})
+        return render(request, self.template_name,{'form':form, 'blocks':blocks, 'currdate':currdate, "date_array":date_array, "sat_date_array":sat_date_array, "block_date_array":block_date_array ,"first_day":first_day, "first_date":first_date.date(), "tasks":tasks})
 
 class UpdateView(APIView):
     def get(self,request):
@@ -95,12 +88,14 @@ class UpdateView(APIView):
         date_time = datetime.strptime(date_req,"%d/%m/%Y")
         date = date_time.date()
         blocks  = DateInstance.objects.filter(date = date)
+        tasks = Tasks.objects.filter(date = date)
+        tsks = [[task.pk,task.task] for task in tasks]
         if blocks:
             block = blocks[0]
-            response = {"status":block.status, "task1":block.task1, "task2":block.task2, "task3":block.task3}
+            response = {"status":block.status, "tasks":tsks}
             return HttpResponse(json.dumps(response), status=200)
         else:
-            response = {"status":"None", "task1":"None", "task2":"None", "task3":"None"}
+            response = {"status":"None"}
             return HttpResponse(json.dumps(response), status=200)
 
 class TestView(APIView):

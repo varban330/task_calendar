@@ -95,6 +95,14 @@ td{
   background-color: #AAAAAA;
 }
 
+.date-task{
+  background-color: #9F74E8;  
+}
+
+.date-task:hover{
+  background-color: #AAAAAA;
+}
+
 #newtaskdiv{
   display: none;
 }

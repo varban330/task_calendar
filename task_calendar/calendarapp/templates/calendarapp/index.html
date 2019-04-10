@@ -104,39 +104,19 @@
                   {% if block.status != 'None' %}
                   <p class="date-status"><ins><b>{{ block.status }}</b></ins></p>
                   {% endif %}
-                  {% if block.task1 != "None" %}
-                    {% if block.task1 == "Work Allocated" %}
-                      <p class="date-task work-task"><b>{{ block.task1 }}</b></p>
+                  {% for tasker in tasks %}
+                    {% if tasker.date == block.date %}
+                      {% if tasker.task == "Work Allocated" %}
+                        <p class="date-task work-task"><b>{{ tasker.task }}</b></p>
+                      {% elif tasker.task == "Scheduled Call" %}
+                        <p class="date-task call-task"><b>{{ tasker.task }}</b></p>
+                      {% elif tasker.task == "Meeting Scheduled" %}
+                        <p class="date-task meet-task"><b>{{ tasker.task }}</b></p>
+                      {% else %}
+                        <p class="date-task"><b>{{ tasker.task }}</b></p>
+                      {% endif %}
                     {% endif %}
-                    {% if block.task1 == "Scheduled Call" %}
-                      <p class="date-task call-task"><b>{{ block.task1 }}</b></p>
-                    {% endif %}
-                    {% if block.task1 == "Meeting Scheduled" %}
-                      <p class="date-task meet-task"><b>{{ block.task1 }}</b></p>
-                    {% endif %}
-                  {% endif %}
-                  {% if block.task2 != "None" %}
-                  {% if block.task2 == "Work Allocated" %}
-                    <p class="date-task work-task"><b>{{ block.task2 }}</b></p>
-                  {% endif %}
-                  {% if block.task2 == "Scheduled Call" %}
-                    <p class="date-task call-task"><b>{{ block.task2 }}</b></p>
-                  {% endif %}
-                  {% if block.task2 == "Meeting Scheduled" %}
-                    <p class="date-task meet-task"><b>{{ block.task2 }}</b></p>
-                  {% endif %}
-                  {% endif %}
-                  {% if block.task3 != "None" %}
-                  {% if block.task3 == "Work Allocated" %}
-                    <p class="date-task work-task"><b>{{ block.task3 }}</b></p>
-                  {% endif %}
-                  {% if block.task3 == "Scheduled Call" %}
-                    <p class="date-task call-task"><b>{{ block.task3 }}</b></p>
-                  {% endif %}
-                  {% if block.task3 == "Meeting Scheduled" %}
-                    <p class="date-task meet-task"><b>{{ block.task3 }}</b></p>
-                  {% endif %}
-                  {% endif %}
+                  {% endfor %}
               </td>
               {% endif %}
             {% endfor %}
@@ -168,39 +148,19 @@
                   {% if block.status != 'None' %}
                   <p class="date-status"><ins><b>{{ block.status }}</b></ins></p>
                   {% endif %}
-                  {% if block.task1 != "None" %}
-                    {% if block.task1 == "Work Allocated" %}
-                      <p class="date-task work-task"><b>{{ block.task1 }}</b></p>
+                  {% for tasker in tasks %}
+                    {% if tasker.date == block.date %}
+                      {% if tasker.task == "Work Allocated" %}
+                        <p class="date-task work-task"><b>{{ tasker.task }}</b></p>
+                      {% elif tasker.task == "Scheduled Call" %}
+                        <p class="date-task call-task"><b>{{ tasker.task }}</b></p>
+                      {% elif tasker.task == "Meeting Scheduled" %}
+                        <p class="date-task meet-task"><b>{{ tasker.task }}</b></p>
+                      {% else %}
+                        <p class="date-task"><b>{{ tasker.task }}</b></p>
+                      {% endif %}
                     {% endif %}
-                    {% if block.task1 == "Scheduled Call" %}
-                      <p class="date-task call-task"><b>{{ block.task1 }}</b></p>
-                    {% endif %}
-                    {% if block.task1 == "Meeting Scheduled" %}
-                      <p class="date-task meet-task"><b>{{ block.task1 }}</b></p>
-                    {% endif %}
-                  {% endif %}
-                  {% if block.task2 != "None" %}
-                  {% if block.task2 == "Work Allocated" %}
-                    <p class="date-task work-task"><b>{{ block.task2 }}</b></p>
-                  {% endif %}
-                  {% if block.task2 == "Scheduled Call" %}
-                    <p class="date-task call-task"><b>{{ block.task2 }}</b></p>
-                  {% endif %}
-                  {% if block.task2 == "Meeting Scheduled" %}
-                    <p class="date-task meet-task"><b>{{ block.task2 }}</b></p>
-                  {% endif %}
-                  {% endif %}
-                  {% if block.task3 != "None" %}
-                  {% if block.task3 == "Work Allocated" %}
-                    <p class="date-task work-task"><b>{{ block.task3 }}</b></p>
-                  {% endif %}
-                  {% if block.task3 == "Scheduled Call" %}
-                    <p class="date-task call-task"><b>{{ block.task3 }}</b></p>
-                  {% endif %}
-                  {% if block.task3 == "Meeting Scheduled" %}
-                    <p class="date-task meet-task"><b>{{ block.task3 }}</b></p>
-                  {% endif %}
-                  {% endif %}
+                  {% endfor %}
               </td>
               {% endif %}
             {% endfor %}
@@ -255,35 +215,20 @@
                   <option>Meeting Scheduled</option>
                 </select>
                 <br>
-                <button type="button" data-url="{% url 'add-task' %}" class="btn btn-success" onclick="addtask(this)">Add Task</button>&nbsp;
-                <button type="button" class="btn btn-warning" onclick="addnewtask()">Add Custom</button>
+              </div>
+              <div class="form-group" id="newtaskdiv">
+                <label for="New Task">Write Custom Task: </label>
+                <input type="text" class="form-control" id="newtask" name="newtask" placeholder="New Custom Task">
               </div>
               <div id="tasks-panel">
                 <div class="form-group">
                   <label>Tasks:</label>
                 </div>
               </div>
+              <br>
               <div class="form-group">
-                <label for="task2">Task2</label>
-                <select class="form-control" id="task2" name="task2">
-                  <option>None</option>
-                  <option>Work Allocated</option>
-                  <option>Scheduled Call</option>
-                  <option>Meeting Scheduled</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="task3">Task3</label>
-                <select class="form-control" id="task3" name="task3">
-                  <option>None</option>
-                  <option>Work Allocated</option>
-                  <option>Scheduled Call</option>
-                  <option>Meeting Scheduled</option>
-                </select>
-              </div>
-              <div class="form-group" id="newtaskdiv">
-                <label for="New Task">Write Custom Task: </label>
-                <input type="text" class="form-control" id="newtask" name="newtask" placeholder="New Custom Task">
+              <button type="button" data-url="{% url 'add-task' %}" class="btn btn-success" onclick="addtask(this)">Add Task</button>&nbsp;
+              <button type="button" class="btn btn-warning" onclick="addnewtask()">Add Custom</button>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
