@@ -28,7 +28,7 @@ var showValue = function(val){
   var myData = {
     date: text
   }
-  fetch("http://127.0.0.1:8000/update/", {
+  fetch("{% url 'update' %}", {
     method: "post",
     credentials: "same-origin",
     headers: {
