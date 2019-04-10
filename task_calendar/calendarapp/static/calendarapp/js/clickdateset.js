@@ -45,19 +45,24 @@ var showValue = function(val,obj){
     console.log("Data is ok", data);
     document.getElementById("status").value = data.status;
     var old_html = object.innerHTML
-    var task_array = data.tasks
-    var i;
-    for (i = 0; i < task_array.length; i++) {
-      old_html += `<div class="card" id="card${task_array[i][0]}">
-        <div class="card-body">
-          ${task_array[i][1]}
-          <button type="button" id="${task_array[i][0]}" onclick="deletetask(this)" class="close" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      </div>`;
+    if(data.tasks){
+      var task_array = data.tasks
+      var i;
+      for (i = 0; i < task_array.length; i++) {
+        old_html += `<div class="card" id="card${task_array[i][0]}">
+          <div class="card-body">
+            ${task_array[i][1]}
+            <button type="button" id="${task_array[i][0]}" onclick="deletetask(this)" class="close" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>`;
+      }
+      object.innerHTML = old_html;
     }
-    object.innerHTML = old_html;
+    else{
+      object.outerHTML = ""
+    }
   }).catch(function(ex) {
     console.log("parsing failed", ex);
   });
