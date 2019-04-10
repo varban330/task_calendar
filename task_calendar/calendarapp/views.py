@@ -85,55 +85,6 @@ class IndexView(View):
             block_date_array.append(block.date)
         return render(request, self.template_name,{'form':form, 'blocks':blocks, 'currdate':currdate, "date_array":date_array, "sat_date_array":sat_date_array, "block_date_array":block_date_array ,"first_day":first_day, "first_date":first_date.date()})
 
-class UpdateView(APIView):
-    def get(self,request):
-        dict = {'message':"hello"}
-        return HttpResponse(json.dumps(dict), status=200)
-
-    def post(self,request):
-        date_req = request.data['date']
-        date_time = datetime.strptime(date_req,"%d/%m/%Y")
-        date = date_time.date()
-        blocks  = DateInstance.objects.filter(date = date)
-        if blocks:
-            block = blocks[0]
-            response = {"status":block.status, "task1":block.task1, "task2":block.task2, "task3":block.task3}
-            return HttpResponse(json.dumps(response), status=200)
-        else:
-            response = {"status":"None", "task1":"None", "task2":"None", "task3":"None"}
-            return HttpResponse(json.dumps(response), status=200)
-
-
-class RecordView(APIView):
-    def post(self,request):
-        date_req = request.data['date']
-        print(date_req)
-        date_time = datetime.strptime(date_req,"%d/%m/%Y")
-        date = date_time.date()
-        status = request.data['status']
-        task1 = request.data['task1']
-        task2 = request.data['task2']
-        task3 = request.data['task3']
-        blocks  = DateInstance.objects.filter(date = date)
-        if blocks:
-            block = blocks[0]
-            block.status = status
-            block.task1 = task1
-            block.task2 = task2
-            block.task3 = task3
-            block.save()
-        else:
-            block = DateInstance()
-            block.status = status
-            block.task1 = task1
-            block.task2 = task2
-            block.task3 = task3
-            block.date = date
-            block.save()
-        response = {'message':"Database Updated Successfully"}
-        return HttpResponse(json.dumps(response), status=200)
-
-
 class TestView(APIView):
     def get(self, request):
             dict = {'message': 'Hi,This is your developer, Varun this side'}
