@@ -100,7 +100,7 @@
                 {% if block.status == 'None' %}
                 <td class="border border-secondary">
                 {% endif %}
-                  <button type="button" onclick="showValue({{ first_date|date:'d' }})" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal" id="btn1">{{ first_date.day }}</button>
+                  <button type="button" data-url="{% url 'update' %}" onclick="showValue({{ first_date|date:'d' }},this)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal" id="btn1">{{ first_date.day }}</button>
                   {% if block.status != 'None' %}
                   <p class="date-status"><ins><b>{{ block.status }}</b></ins></p>
                   {% endif %}
@@ -142,7 +142,7 @@
             {% endfor %}
             {% if first_date not in block_date_array %}
             <td class="border border-secondary">
-              <button type="button" onclick="showValue({{ first_date|date:'d' }})" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">{{ first_date.day }}</button>
+              <button type="button" data-url="{% url 'update' %}" onclick="showValue({{ first_date|date:'d' }},this)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">{{ first_date.day }}</button>
             </td>
             {% endif %}
             {% if first_day == 'Saturday' %}
@@ -164,7 +164,7 @@
                 {% if block.status == 'None' %}
                 <td class="border border-secondary">
                 {% endif %}
-                  <button type="button" onclick="showValue({{ date|date:'d' }})" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal" id="btn1">{{ date.day }}</button>
+                  <button type="button" data-url="{% url 'update' %}" onclick="showValue({{ date|date:'d' }},this)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal" id="btn1">{{ date.day }}</button>
                   {% if block.status != 'None' %}
                   <p class="date-status"><ins><b>{{ block.status }}</b></ins></p>
                   {% endif %}
@@ -206,7 +206,7 @@
             {% endfor %}
             {% if date not in block_date_array %}
             <td class="border border-secondary">
-              <button type="button" onclick="showValue({{ date|date:'d' }})" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">{{ date.day }}</button>
+              <button type="button" data-url="{% url 'update' %}" onclick="showValue({{ date|date:'d' }},this)" class="btn btn-danger rounded-circle date-btn" data-toggle="modal" data-target="#stModal">{{ date.day }}</button>
             </td>
             {% endif %}
               {% if date in sat_date_array %}
@@ -254,6 +254,14 @@
                   <option>Scheduled Call</option>
                   <option>Meeting Scheduled</option>
                 </select>
+                <br>
+                <button type="button" data-url="{% url 'add-task' %}" class="btn btn-success" onclick="addtask(this)">Add Task</button>&nbsp;
+                <button type="button" class="btn btn-warning" onclick="addnewtask()">Add Custom</button>
+              </div>
+              <div id="tasks-panel">
+                <div class="form-group">
+                  <label>Tasks:</label>
+                </div>
               </div>
               <div class="form-group">
                 <label for="task2">Task2</label>
@@ -273,6 +281,10 @@
                   <option>Meeting Scheduled</option>
                 </select>
               </div>
+              <div class="form-group" id="newtaskdiv">
+                <label for="New Task">Write Custom Task: </label>
+                <input type="text" class="form-control" id="newtask" name="newtask" placeholder="New Custom Task">
+              </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Save changes</button>
@@ -283,7 +295,13 @@
       </div>
     </div>
   <!--Bootstrap JS Scripts -->
+    <script>
+    $(function () {
+  $('[data-toggle="popover"]').popover()
+      })
+    </script>
     <script type="text/javascript" src="{% static 'calendarapp/js/clickdateset.js' %}"></script>
+    <script type="text/javascript" src="{% static 'calendarapp/js/modalfunctions.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

@@ -11,3 +11,11 @@ class DateInstance(models.Model):
     def __str__(self):
         string = self.date.strftime("%d/%m/%Y") + ' -- ' + self.status
         return string
+
+class Tasks(models.Model):
+    date = models.DateField(default = datetime.now)
+    task = models.CharField(max_length=100)
+
+    def __str__(self):
+        string = str(self.pk)+self.date.strftime("%d/%m/%Y")+self.task
+        return string

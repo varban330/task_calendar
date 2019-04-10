@@ -94,3 +94,7 @@ td{
 .meet-task:hover{
   background-color: #AAAAAA;
 }
+
+#newtaskdiv{
+  display: none;
+}

@@ -1,4 +1,4 @@
-var showValue = function(val){
+var showValue = function(val,obj){
     var str = document.getElementById("top_div_header").textContent;
     var res = str.slice(-8,-1)
     if (val<10){
@@ -25,10 +25,11 @@ var showValue = function(val){
       }
       return cookieValue;
     }
+  var url = obj.getAttribute('data-url');
   var myData = {
     date: text
   }
-  fetch("{% url 'update' %}", {
+  fetch(url, {
     method: "post",
     credentials: "same-origin",
     headers: {

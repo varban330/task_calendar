@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import View
-from .models import DateInstance
+from .models import DateInstance, Tasks
 from datetime import datetime
 from .functions import last_day_of_month, generate_date_array, generate_sat_date_array,isttime
 from .forms import DateForm
@@ -111,3 +111,24 @@ class TestView(APIView):
     def post(self,request):
             dict = {'message': 'Hi,This is your developer, Varun this side'}
             return HttpResponse(json.dumps(dict), status=200)
+
+class AddTask(APIView):
+    def post(self, request):
+        date_req = request.data['date']
+        task1 = request.data['task1']
+        date_time = datetime.strptime(date_req,"%d/%m/%Y")
+        date = date_time.date()
+        tasks = Tasks()
+        tasks.date = date
+        tasks.task = task1
+        tasks.save()
+        response = {"task1":task1, "id":tasks.pk, "date":date_req}
+        return HttpResponse(json.dumps(response), status=200)
+
+class DeleteTask(APIView):
+    def post(self,request):
+        id = int(request.data['id'])
+        Tasks.objects.get(pk=id).delete()
+        string = "Task Deleted Successfully - "+str(id)
+        dict = {"message":string}
+        return HttpResponse(json.dumps(dict), status=200)
