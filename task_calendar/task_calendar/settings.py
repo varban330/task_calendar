@@ -25,7 +25,7 @@ SECRET_KEY = 'fv=1*iy2hze&_h934matyvz%k#!ea*klm8!xyh^#k7ggkn07j0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['stark-basin-47495.herokuapp.com', 'http://127.0.0.1:8000/']
+ALLOWED_HOSTS = ['stark-basin-47495.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
